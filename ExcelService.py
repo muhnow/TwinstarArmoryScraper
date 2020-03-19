@@ -10,15 +10,17 @@ sheet = client.open("Apollo Character Data").sheet1
 
 def uploadToGoogle(characterInfo, characterName):
 	tableHeaderRowOffset = 2
-	sheetColOffset = 2
 	totalSlots = 18
 
 	charRow = [''] * totalSlots
-	charRow[0] = characterName
 	charIndex = Config.players.index(characterName)
 	charRowIndex = charIndex + tableHeaderRowOffset
+	rangeToUpdate = "A" + str(charRowIndex) + ":R" + str(charRowIndex)
+
 	items = characterInfo[0]
 	slots = characterInfo[3]
+
+	charRow[0] = characterName
 
 	for index,item in enumerate(items):
 		itemSlot = int(slots[index])
@@ -28,7 +30,12 @@ def uploadToGoogle(characterInfo, characterName):
 			
 			charRow[sheetCol] = item
 
-	sheet.insert_row(charRow, charRowIndex)
+	sheet.batch_update([{
+		'range': rangeToUpdate,
+		'values': [charRow]
+	}])
+
+	# sheet.insert_row(charRow, charRowIndex)
 
 
 	print("Finished uploading data for " + characterName + "!")
@@ -37,5 +44,12 @@ def uploadToGoogle(characterInfo, characterName):
 
 
 def deleteData():
-	for i in range(0, 10):
-		sheet.delete_row(2)
+	outerBound = 2 + len(Config.players)
+	cellRange = 'A2:R' + str(outerBound)
+
+	cellsToDelete = sheet.range(cellRange)
+
+	for cell in cellsToDelete:
+		cell.value = ''
+
+	sheet.update_cells(cellsToDelete)

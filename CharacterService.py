@@ -1,14 +1,15 @@
-from lxml import html
-import requests
 import Config
 import ExcelService
+import requests
+from lxml import html
+
 
 def makeRequest(characterName):
 	print("Processing " + characterName + "...")
 
-	url = Config.armoryLinkWithoutName + characterName;
+	url = Config.armoryLinkWithoutName + characterName
 
-	response = requests.get(url);
+	response = requests.get(url)
 
 	if(response.status_code == 200):
 		pageTree = html.fromstring(response.content)
@@ -29,7 +30,7 @@ def parseCharacterData(characterName, pageTree):
 	ExcelService.uploadToGoogle(characterInfo, characterName)
 
 def processPlayers():
-	#ExcelService.deleteData()
+	ExcelService.deleteData()
 
 	for player in Config.players:
 		makeRequest(player)

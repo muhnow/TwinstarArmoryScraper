@@ -1,7 +1,5 @@
 import CharacterService
 
-CharacterService.processPlayers();
-
-
+CharacterService.processPlayers()
 
 
