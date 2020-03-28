@@ -1,35 +1,43 @@
-from lxml import html
-import requests
 import Config
-import ExcelService
+from ExcelService import ExcelService
+from CharacterInfo import CharacterInfo
+import requests
+from lxml import html
 
-def makeRequest(characterName):
-	print("Processing " + characterName + "...")
+class CharacterService:
+    def __init__(self):
+        self.ExcelService = ExcelService()
+        self.CharacterInfoList = []
 
-	url = Config.armoryLinkWithoutName + characterName;
+    def getCharacterInfo(self, characterName):
+        print("Processing " + characterName + "...")
 
-	response = requests.get(url);
+        url = Config.armoryLinkWithoutName + characterName
 
-	if(response.status_code == 200):
-		pageTree = html.fromstring(response.content)
-		parseCharacterData(characterName, pageTree)
-	else:
-		print('error parsing ' + characterName)
+        response = requests.get(url)
 
-def parseCharacterData(characterName, pageTree):
-	itemNames = pageTree.xpath('//item[@name]/@name')
-	itemIlvls = pageTree.xpath('//item[@level]/@level')
-	enchants = pageTree.xpath('//item[@permanentenchant]/@permanentenchant')
-	slots = pageTree.xpath('//item[@slot]/@slot')
+        if(response.status_code == 200):
+            pageTree = html.fromstring(response.content)
+            self.parseCharacterData(characterName, pageTree)
+        else:
+            print('Error parsing ' + characterName + '.')
 
-	characterInfo = [itemNames, itemIlvls, enchants, slots]
+    def parseCharacterData(self, characterName, pageTree):
+        itemNames = pageTree.xpath('//item[@name]/@name')
+        itemIlvls = pageTree.xpath('//item[@level]/@level')
+        enchants = pageTree.xpath('//item[@permanentenchant]/@permanentenchant')
+        slots = pageTree.xpath('//item[@slot]/@slot')
 
-	print("Retrieved data for " + characterName	+ "! Uploading to sheet...")
+        characterInfo = CharacterInfo(characterName, itemNames, itemIlvls, enchants, slots)
 
-	ExcelService.uploadToGoogle(characterInfo, characterName)
+        self.CharacterInfoList.append(characterInfo)
 
-def processPlayers():
-	#ExcelService.deleteData()
+        print("Retrieved data for " + characterName	+ "!")
 
-	for player in Config.players:
-		makeRequest(player)
+    def processPlayers(self):
+        for player in Config.players:
+            self.getCharacterInfo(player)
+        
+        print("-----------------------------------")
+
+

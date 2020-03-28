@@ -37,8 +37,13 @@ slotColumnDict = {
 	17:17
 }
 
-#sheet.update_cell(2, 1, "This is from my local python script!")
+# Players list that is used for HTTP Requests towards the Twinstar Armory URL
+# Adding / removing players from this list is how you modify who appears on the spreadsheet output 
+players = ['Avery', 'Bagelsdk', 'Xenophics', 'Jizzlin', 'Eyeconic', 'Freedom', 'Aarellia', 'Preyeet', 'Manao', 'Momentine', 'Ambition']
 
-players = ['Avery', 'Bagelsdk', 'Xenophics', 'Jizzlin', 'Eyeconic', 'Freedom', 'Aarellia', 'Preyeet', 'Manao', 'Momentine', 'Ambition'];
+# Base armory URL
 armoryLinkWithoutName = "http://armory.twinstar.cz/character-sheet.xml?r=Apollo2&cn="
+
+# Slot numbers determined by blizzard that we are chosing to ignore 
+# 3 is shirt, 18 is tabard, we don't care about those
 slotsToIgnore = [3, 18]
