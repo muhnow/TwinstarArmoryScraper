@@ -1,5 +1,7 @@
-import CharacterService
+from CharacterService import CharacterService
 
-CharacterService.processPlayers()
+_characterService = CharacterService();
+
+_characterService.processPlayers();
 
 
