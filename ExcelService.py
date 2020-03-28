@@ -1,6 +1,7 @@
 import gspread
 import Config
 from oauth2client.service_account import ServiceAccountCredentials
+from CharacterInfo import CharacterInfo
 
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
@@ -14,19 +15,27 @@ class ExcelService():
 	def __init__(self):
 		self.rowsToUpload = []
 
-	def queueData(self, characterInfo, characterName):
+	def uploadData(self, charInfoList):
+		print("Queueing data...")
+
+		for info in charInfoList:
+			self.queueData(info)
+		
+		self.batchUpload()
+
+	def queueData(self, characterInfo: CharacterInfo):
 		tableHeaderRowOffset = 2
 		totalSlots = 18
 
 		charRow = [''] * totalSlots
-		charIndex = Config.players.index(characterName)
+		charIndex = Config.players.index(characterInfo.Name)
 		charRowIndex = charIndex + tableHeaderRowOffset
 		rangeToUpdate = "A" + str(charRowIndex) + ":R" + str(charRowIndex)
 
-		items = characterInfo[0]
-		slots = characterInfo[3]
+		items = characterInfo.ItemNames
+		slots = characterInfo.ItemSlots
 
-		charRow[0] = characterName
+		charRow[0] = characterInfo.Name
 
 		for index,item in enumerate(items):
 			itemSlot = int(slots[index])
@@ -43,15 +52,10 @@ class ExcelService():
 
 		self.rowsToUpload.append(rowToUpload)
 
-		# sheet.insert_row(charRow, charRowIndex)
-
-
-		print("Finished uploading data for " + characterName + "!")
-		print("---------------------------------------------------")
-
-
 	def batchUpload(self):
+		print("Uploading data...")
 		sheet.batch_update(self.rowsToUpload)
+		print("Data upload complete!")
 
 	def deleteData(self):
 		outerBound = 2 + len(Config.players)
@@ -61,5 +65,5 @@ class ExcelService():
 
 		for cell in cellsToDelete:
 			cell.value = ''
-
+		
 		sheet.update_cells(cellsToDelete)

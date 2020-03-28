@@ -1,7 +1,17 @@
 from CharacterService import CharacterService
+from ExcelService import ExcelService
 
-_characterService = CharacterService();
 
-_characterService.processPlayers();
+def main():
+    characterService = CharacterService()
+    excelService = ExcelService()
 
+    excelService.deleteData()
+
+    characterService.processPlayers()
+
+    excelService.uploadData(characterService.CharacterInfoList)
+
+
+main()
 
