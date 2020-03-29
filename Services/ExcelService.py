@@ -1,7 +1,7 @@
 import gspread
 import Config
 from oauth2client.service_account import ServiceAccountCredentials
-from CharacterInfo import CharacterInfo
+from DataModels.CharacterInfo import CharacterInfo
 
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
@@ -10,8 +10,6 @@ client = gspread.authorize(creds)
 sheet = client.open("Apollo Character Data").sheet1
 
 class ExcelService():
-
-
 	def __init__(self):
 		self.rowsToUpload = []
 

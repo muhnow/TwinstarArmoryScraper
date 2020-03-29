@@ -1,12 +1,10 @@
 import Config
-from ExcelService import ExcelService
-from CharacterInfo import CharacterInfo
+from DataModels.CharacterInfo import CharacterInfo
 import requests
 from lxml import html
 
 class CharacterService:
     def __init__(self):
-        self.ExcelService = ExcelService()
         self.CharacterInfoList = []
 
     def getCharacterInfo(self, characterName):

@@ -1,5 +1,5 @@
-from CharacterService import CharacterService
-from ExcelService import ExcelService
+from Services.CharacterService import CharacterService
+from Services.ExcelService import ExcelService
 
 
 def main():
