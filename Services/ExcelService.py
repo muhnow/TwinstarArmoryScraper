@@ -1,5 +1,5 @@
 import gspread
-import Config
+from Configs.Config import *
 from oauth2client.service_account import ServiceAccountCredentials
 from DataModels.CharacterInfo import CharacterInfo
 
@@ -28,7 +28,7 @@ class ExcelService():
 		totalSlots = 18
 
 		charRow = [''] * totalSlots
-		charIndex = Config.players.index(characterInfo.Name)
+		charIndex = players.index(characterInfo.Name)
 		charRowIndex = charIndex + tableHeaderRowOffset
 		rangeToUpdate = "A" + str(charRowIndex) + ":R" + str(charRowIndex)
 
@@ -40,8 +40,8 @@ class ExcelService():
 		for index,item in enumerate(items):
 			itemSlot = int(slots[index])
 
-			if(itemSlot not in Config.slotsToIgnore):
-				sheetCol = Config.slotColumnDict[itemSlot]
+			if(itemSlot not in slotsToIgnore):
+				sheetCol = slotColumnDict[itemSlot]
 				
 				charRow[sheetCol] = item
 
@@ -58,7 +58,7 @@ class ExcelService():
 		print("Data upload complete!")
 
 	def deleteData(self):
-		outerBound = 2 + len(Config.players)
+		outerBound = 2 + len(players)
 		cellRange = 'A2:R' + str(outerBound)
 
 		cellsToDelete = sheet.range(cellRange)

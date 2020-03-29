@@ -1,4 +1,4 @@
-import Config
+from Configs.Config import *
 from DataModels.CharacterInfo import CharacterInfo
 import requests
 import click
@@ -9,7 +9,7 @@ class CharacterService:
         self.CharacterInfoList = []
 
     def getCharacterInfo(self, characterName):
-        url = Config.armoryLinkWithoutName + characterName
+        url = armoryLinkWithoutName + characterName
 
         response = requests.get(url)
 
@@ -17,7 +17,7 @@ class CharacterService:
             pageTree = html.fromstring(response.content)
             self.parseCharacterData(characterName, pageTree)
         else:
-            print('Error parsing ' + characterName + '.')
+            return
 
     def parseCharacterData(self, characterName, pageTree):
         itemNames = pageTree.xpath('//item[@name]/@name')
@@ -30,7 +30,7 @@ class CharacterService:
         self.CharacterInfoList.append(characterInfo)
 
     def processPlayers(self):
-        with click.progressbar(Config.players, label="Retrieving character data...", item_show_func=self.progressItemLabel) as bar:
+        with click.progressbar(players, label="Retrieving character data...", item_show_func=self.progressItemLabel) as bar:
             for player in bar:
                 self.getCharacterInfo(player)
         
