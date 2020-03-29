@@ -9,8 +9,6 @@ class CharacterService:
         self.CharacterInfoList = []
 
     def getCharacterInfo(self, characterName):
-        #print("Processing " + characterName + "...")
-
         url = Config.armoryLinkWithoutName + characterName
 
         response = requests.get(url)
@@ -30,8 +28,6 @@ class CharacterService:
         characterInfo = CharacterInfo(characterName, itemNames, itemIlvls, enchants, slots)
 
         self.CharacterInfoList.append(characterInfo)
-
-        #print("Retrieved data for " + characterName	+ "!")
 
     def processPlayers(self):
         with click.progressbar(Config.players, label="Retrieving character data...", item_show_func=self.progressItemLabel) as bar:
