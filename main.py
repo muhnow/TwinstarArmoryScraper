@@ -12,6 +12,4 @@ def main():
 
     excelService.uploadData(characterService.CharacterInfoList)
 
-
 main()
-

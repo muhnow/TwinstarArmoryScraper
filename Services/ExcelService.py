@@ -10,6 +10,8 @@ client = gspread.authorize(creds)
 sheet = client.open("Apollo Character Data").sheet1
 
 class ExcelService():
+
+
 	def __init__(self):
 		self.rowsToUpload = []
 
