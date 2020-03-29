@@ -1,17 +1,14 @@
 import Config
-from ExcelService import ExcelService
-from CharacterInfo import CharacterInfo
+from DataModels.CharacterInfo import CharacterInfo
 import requests
+import click
 from lxml import html
 
 class CharacterService:
     def __init__(self):
-        self.ExcelService = ExcelService()
         self.CharacterInfoList = []
 
     def getCharacterInfo(self, characterName):
-        print("Processing " + characterName + "...")
-
         url = Config.armoryLinkWithoutName + characterName
 
         response = requests.get(url)
@@ -32,12 +29,13 @@ class CharacterService:
 
         self.CharacterInfoList.append(characterInfo)
 
-        print("Retrieved data for " + characterName	+ "!")
-
     def processPlayers(self):
-        for player in Config.players:
-            self.getCharacterInfo(player)
+        with click.progressbar(Config.players, label="Retrieving character data...", item_show_func=self.progressItemLabel) as bar:
+            for player in bar:
+                self.getCharacterInfo(player)
         
         print("-----------------------------------")
 
 
+    def progressItemLabel(self, b):
+        return b
