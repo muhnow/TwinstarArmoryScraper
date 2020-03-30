@@ -18,6 +18,7 @@ class CharacterService:
             return
 
         pageTree = html.fromstring(response.content)
+        
         self.parseCharacterData(characterName, pageTree)
 
     def parseCharacterData(self, characterName, pageTree):

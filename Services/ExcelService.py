@@ -48,8 +48,6 @@ class ExcelService():
 				
 				charRow[sheetCol] = item
 
-		
-
 		rowToUpload = {
 			'range': rangeToUpdate,
 			'values': [charRow]
