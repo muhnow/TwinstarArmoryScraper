@@ -25,20 +25,23 @@ class ExcelService():
 
 	def queueData(self, characterInfo: CharacterInfo):
 		tableHeaderRowOffset = 2
-		totalSlots = 18
+		totalColumns = 21
 
-		charRow = [''] * totalSlots
+		charRow = [''] * totalColumns
 		charIndex = players.index(characterInfo.Name)
 		charRowIndex = charIndex + tableHeaderRowOffset
-		rangeToUpdate = "A" + str(charRowIndex) + ":R" + str(charRowIndex)
+		rangeToUpdate = "A" + str(charRowIndex) + ":U" + str(charRowIndex)
 
 		items = characterInfo.ItemNames
 		slots = characterInfo.ItemSlots
 
 		charRow[0] = characterInfo.Name
+		charRow[1] = characterInfo.getAverageItemLevel()
+		charRow[2] = ''
+		charRow[3] = ''
 
 		for index,item in enumerate(items):
-			itemSlot = int(slots[index])
+			itemSlot = slots[index]
 
 			if(itemSlot not in slotsToIgnore):
 				sheetCol = slotColumnDict[itemSlot]
