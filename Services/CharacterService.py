@@ -1,8 +1,9 @@
+import click
+import requests
 from Configs.Config import *
 from DataModels.CharacterInfo import CharacterInfo
-import requests
-import click
 from lxml import html
+
 
 class CharacterService:
     def __init__(self):
@@ -13,17 +14,17 @@ class CharacterService:
 
         response = requests.get(url)
 
-        if(response.status_code == 200):
-            pageTree = html.fromstring(response.content)
-            self.parseCharacterData(characterName, pageTree)
-        else:
+        if(response.status_code != 200):
             return
+
+        pageTree = html.fromstring(response.content)
+        self.parseCharacterData(characterName, pageTree)
 
     def parseCharacterData(self, characterName, pageTree):
         itemNames = pageTree.xpath('//item[@name]/@name')
-        itemIlvls = pageTree.xpath('//item[@level]/@level')
+        itemIlvls = [int(num) for num in pageTree.xpath('//item[@level]/@level') if int(num) > 100]
         enchants = pageTree.xpath('//item[@permanentenchant]/@permanentenchant')
-        slots = pageTree.xpath('//item[@slot]/@slot')
+        slots = [int(slot) for slot in pageTree.xpath('//item[@slot]/@slot')]
 
         characterInfo = CharacterInfo(characterName, itemNames, itemIlvls, enchants, slots)
 
