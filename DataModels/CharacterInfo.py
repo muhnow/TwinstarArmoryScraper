@@ -10,3 +10,4 @@ class CharacterInfo:
     
     def getAverageItemLevel(self):
         return math.floor(sum(self.ItemLevels) / len(self.ItemLevels))
+
