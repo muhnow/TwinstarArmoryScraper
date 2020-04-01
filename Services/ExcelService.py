@@ -37,7 +37,7 @@ class ExcelService():
 
 		charRow[0] = characterInfo.Name
 		charRow[1] = characterInfo.getAverageItemLevel()
-		charRow[2] = ''
+		charRow[2] = characterInfo.ActiveSpec
 		charRow[3] = ''
 
 		for index,item in enumerate(items):
