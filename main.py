@@ -1,15 +1,15 @@
-from Services.CharacterService import CharacterService
+from Services.CharacterInfoService import CharacterInfoService
 from Services.ExcelService import ExcelService
 
 
 def main():
-    characterService = CharacterService()
+    characterInfoService = CharacterInfoService()
     excelService = ExcelService()
 
     excelService.deleteData()
 
-    characterService.processPlayers()
+    characterInfoService.processPlayers()
 
-    excelService.uploadData(characterService.CharacterInfoList)
+    excelService.uploadData(characterInfoService.CharacterInfoList)
 
 main()

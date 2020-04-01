@@ -47,3 +47,10 @@ armoryLinkWithoutName = "http://armory.twinstar.cz/character-sheet.xml?r=Apollo2
 # Slot numbers determined by blizzard that we are chosing to ignore 
 # 3 is shirt, 18 is tabard, we don't care about those
 slotsToIgnore = [3, 18]
+
+# At the top of the sheet there is a table header row, and the indexing of excel rows starts at 0.
+# So you get +2 as an offset to find a row in the actual data set.
+headerRowOffset = 2
+
+# You set this value equal to the number of columns you're displaying in the top row. 
+totalColumns = 21
