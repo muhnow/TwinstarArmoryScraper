@@ -1,3 +1,5 @@
+import math
+
 class CharacterInfo:
     def __init__(self, name, itemNames, itemIlvls, enchants, slots):
         self.Name = name
@@ -7,4 +9,5 @@ class CharacterInfo:
         self.ItemSlots = slots
     
     def getAverageItemLevel(self):
-        return round(sum(self.ItemLevels) / len(self.ItemLevels))
+        return math.floor(sum(self.ItemLevels) / len(self.ItemLevels))
+
