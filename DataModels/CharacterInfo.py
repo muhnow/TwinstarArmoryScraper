@@ -1,4 +1,5 @@
 import math
+import Configs.Config as Config
 
 class CharacterInfo:
     def __init__(self, name, itemNames, itemIlvls, enchants, slots, activeSpec):

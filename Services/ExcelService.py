@@ -1,5 +1,5 @@
 import gspread
-from Configs.Config import *
+import Configs.Config as Config
 from oauth2client.service_account import ServiceAccountCredentials
 from DataModels.CharacterInfo import CharacterInfo
 
@@ -19,18 +19,12 @@ class ExcelService():
 		print("Queueing data...")
 
 		for info in charInfoList:
-			self.queueData(info)
+			self.queueRowsToUpload(info)
 		
 		self.batchUpload()
 
-	def queueData(self, characterInfo: CharacterInfo):
-		tableHeaderRowOffset = 2
-		totalColumns = 21
-
-		charRow = [''] * totalColumns
-		charIndex = players.index(characterInfo.Name)
-		charRowIndex = charIndex + tableHeaderRowOffset
-		rangeToUpdate = "A" + str(charRowIndex) + ":U" + str(charRowIndex)
+	def queueRowsToUpload(self, characterInfo: CharacterInfo):
+		charRow = [''] * Config.totalColumns
 
 		items = characterInfo.ItemNames
 		slots = characterInfo.ItemSlots
@@ -43,17 +37,22 @@ class ExcelService():
 		for index,item in enumerate(items):
 			itemSlot = slots[index]
 
-			if(itemSlot not in slotsToIgnore):
-				sheetCol = slotColumnDict[itemSlot]
+			if(itemSlot not in Config.slotsToIgnore):
+				sheetCol = Config.slotColumnDict[itemSlot]
 				
 				charRow[sheetCol] = item
 
 		rowToUpload = {
-			'range': rangeToUpdate,
+			'range': self.getCharacterRangeToUpdate(characterInfo.Name),
 			'values': [charRow]
 		}
 
 		self.rowsToUpload.append(rowToUpload)
+
+	def getCharacterRangeToUpdate(self, characterName):
+		characterRowIndex = Config.players.index(characterName) + Config.headerRowOffset
+
+		return "A" + str(characterRowIndex) + ":U" + str(characterRowIndex)
 
 	def batchUpload(self):
 		print("Uploading data...")
@@ -61,7 +60,7 @@ class ExcelService():
 		print("Data upload complete!")
 
 	def deleteData(self):
-		outerBound = 2 + len(players)
+		outerBound = 2 + len(Config.players)
 		cellRange = 'A2:R' + str(outerBound)
 
 		cellsToDelete = sheet.range(cellRange)

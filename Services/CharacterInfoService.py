@@ -1,6 +1,6 @@
 import click
 import requests
-from Configs.Config import *
+import Configs.Config as Config
 from DataModels.CharacterInfo import CharacterInfo
 from lxml import etree
 
@@ -10,7 +10,7 @@ class CharacterInfoService:
         self.CharacterInfoList = []
 
     def getCharacterInfo(self, characterName):
-        url = armoryLinkWithoutName + characterName
+        url = Config.armoryLinkWithoutName + characterName
 
         response = requests.get(url)
 
@@ -34,7 +34,7 @@ class CharacterInfoService:
         self.CharacterInfoList.append(characterInfo)
 
     def processPlayers(self):
-        with click.progressbar(players, label="Retrieving character data...", item_show_func=self.progressItemLabel) as bar:
+        with click.progressbar(Config.players, label="Retrieving character data...", item_show_func=self.progressItemLabel) as bar:
             for player in bar:
                 self.getCharacterInfo(player)
         
