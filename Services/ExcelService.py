@@ -10,8 +10,6 @@ client = gspread.authorize(creds)
 sheet = client.open("Apollo Character Data").sheet1
 
 class ExcelService():
-
-
 	def __init__(self):
 		self.rowsToUpload = []
 
@@ -32,7 +30,7 @@ class ExcelService():
 		charRow[0] = characterInfo.Name
 		charRow[1] = characterInfo.getAverageItemLevel()
 		charRow[2] = characterInfo.ActiveSpec
-		charRow[3] = ''
+		charRow[3] = len(characterInfo.ValidationMessages)
 
 		for index,item in enumerate(items):
 			itemSlot = slots[index]
@@ -61,7 +59,7 @@ class ExcelService():
 
 	def deleteData(self):
 		outerBound = 2 + len(Config.players)
-		cellRange = 'A2:R' + str(outerBound)
+		cellRange = 'A2:U' + str(outerBound)
 
 		cellsToDelete = sheet.range(cellRange)
 

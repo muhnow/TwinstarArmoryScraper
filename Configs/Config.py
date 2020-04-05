@@ -44,7 +44,7 @@ players = ['Avery', 'Bagelsdk', 'Xenophics', 'Jizzlin', 'Eyeconic', 'Freedom', '
 # Base armory URL
 armoryLinkWithoutName = "http://armory.twinstar.cz/character-sheet.xml?r=Apollo2&cn="
 
-# Slot numbers determined by blizzard that we are chosing to ignore 
+# Slot numbers determined by blizzard that we are chosing to ignore when gathering character gear slots
 # 3 is shirt, 18 is tabard, we don't care about those
 slotsToIgnore = [3, 18]
 
