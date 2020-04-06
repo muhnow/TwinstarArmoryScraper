@@ -45,4 +45,4 @@ class ValidationService:
             self.ErrorMessages.append(errorMsg)
 
     def validateEnchants(self, characterInfo):
-        
+        return

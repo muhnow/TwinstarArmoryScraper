@@ -24,21 +24,14 @@ class ExcelService():
 	def queueRowsToUpload(self, characterInfo: CharacterInfo):
 		charRow = [''] * Config.totalColumns
 
-		items = characterInfo.ItemNames
-		slots = characterInfo.ItemSlots
-
 		charRow[0] = characterInfo.Name
 		charRow[1] = characterInfo.getAverageItemLevel()
 		charRow[2] = characterInfo.ActiveSpec
 		charRow[3] = len(characterInfo.ValidationMessages)
 
-		for index,item in enumerate(items):
-			itemSlot = slots[index]
-
-			if(itemSlot not in Config.slotsToIgnore):
-				sheetCol = Config.slotColumnDict[itemSlot]
-				
-				charRow[sheetCol] = item
+		for item in characterInfo.Items:
+			sheetCol = Config.slotColumnDict[item.Slot]
+			charRow[sheetCol] = item.Name
 
 		rowToUpload = {
 			'range': self.getCharacterRangeToUpdate(characterInfo.Name),
