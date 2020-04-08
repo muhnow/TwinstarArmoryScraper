@@ -39,7 +39,7 @@ slotColumnDict = {
 
 # Players list that is used for HTTP Requests towards the Twinstar Armory URL
 # Adding / removing players from this list is how you modify who appears on the spreadsheet output 
-players = ['Avery', 'Bagelsdk', 'Xenophics', 'Jizzlin', 'Eyeconic', 'Freedom', 'Aarellia', 'Manao', 'Momentine', 'Ambition']
+players = ['Avery', 'Bagelsdk', 'Muhnow', 'Jizzlin', 'Eyeconic', 'Freedom', 'Aarellia', 'Manao', 'Momentine', 'Ambition']
 
 # Slot numbers determined by blizzard that we are chosing to ignore when gathering character gear slots
 # 3 is shirt, 18 is tabard, we don't care about those

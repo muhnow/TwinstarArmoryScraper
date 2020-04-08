@@ -1,7 +1,10 @@
+import Configs.Config as Config
+
 class ValidationService:
     # Move these messages to a validation messages constant file at some point 
     MissingProfession = "Missing professions : " 
     GatheringProfession = "Gathering professions : "
+    MissingEnchants = "Missing enchants: " 
 
     def __init__(self):
         self.ErrorMessages = []
@@ -45,4 +48,19 @@ class ValidationService:
             self.ErrorMessages.append(errorMsg)
 
     def validateEnchants(self, characterInfo):
-        return
+        characterProfs = [characterInfo.Profession1, characterInfo.Profession2]
+        missingEnchantItemSlots = [item.Slot for item in characterInfo.Items if (item.Enchant == "0" and item.Slot not in Config.slotsWithoutEnchants)]
+
+        missingEnchantCount = 0
+
+        if ("Enchanting" in characterProfs):
+            missingEnchantCount += len([slot for slot in Config.ringSlots if slot in missingEnchantItemSlots])
+        
+        if ("Engineering" in characterProfs and 9 in missingEnchantItemSlots):
+            missingEnchantItemSlots.remove(9)
+
+        missingEnchantCount += len(missingEnchantItemSlots)
+        
+        if (missingEnchantCount > 0):
+            errorMsg = self.MissingEnchants + str(missingEnchantCount)
+            self.ErrorMessages.append(errorMsg)
