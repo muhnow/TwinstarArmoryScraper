@@ -31,7 +31,7 @@ class ExcelService():
 
 		for item in characterInfo.Items:
 			sheetCol = Config.slotColumnDict[item.Slot]
-			charRow[sheetCol] = item.Name
+			charRow[sheetCol] = item.getItemDisplayString()
 
 		rowToUpload = {
 			'range': self.getCharacterRangeToUpdate(characterInfo.Name),

@@ -5,3 +5,5 @@ class ItemInfo:
         self.Enchant = itemEnchant
         self.Ilvl = itemIlvl
     
+    def getItemDisplayString(self):
+        return self.Name + " (" + str(self.Ilvl) + ")"
