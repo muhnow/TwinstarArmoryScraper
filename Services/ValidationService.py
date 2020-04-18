@@ -53,14 +53,17 @@ class ValidationService:
 
         missingEnchantCount = 0
 
+        # If enchanter, verify rings are enchanted
         if ("Enchanting" in characterProfs):
             missingEnchantCount += len([slot for slot in Config.ringSlots if slot in missingEnchantItemSlots])
         
+        # If engineer, ignore glove enchant if we found a missing enchant. Likely a tinker exists on the piece
+        # but there isn't a way for me to tell
         if ("Engineering" in characterProfs and 9 in missingEnchantItemSlots):
             missingEnchantItemSlots.remove(9)
 
         missingEnchantCount += len(missingEnchantItemSlots)
-        
+
         if (missingEnchantCount > 0):
             errorMsg = self.MissingEnchants + str(missingEnchantCount)
             self.ErrorMessages.append(errorMsg)
