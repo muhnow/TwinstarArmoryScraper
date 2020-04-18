@@ -41,12 +41,16 @@ slotColumnDict = {
 # Adding / removing players from this list is how you modify who appears on the spreadsheet output 
 players = ['Avery', 'Bagelsdk', 'Xenophics', 'Jizzlin', 'Eyeconic', 'Freedom', 'Aarellia', 'Manao', 'Momentine', 'Ambition']
 
-# Base armory URL
-armoryLinkWithoutName = "http://armory.twinstar.cz/character-sheet.xml?r=Apollo2&cn="
-
-# Slot numbers determined by blizzard that we are chosing to ignore 
+# Slot numbers determined by blizzard that we are chosing to ignore when gathering character gear slots
 # 3 is shirt, 18 is tabard, we don't care about those
 slotsToIgnore = [3, 18]
+
+# Slot numbers determined by blizzard we are looking for when doing enchant validation
+slotsWithoutEnchants = [1, 5, 10, 11, 12, 13, 17]
+
+# Slot numbers determined by blizzard for ring 1 and ring 2. We'll check these to see if an enchanter is 
+# enchanting their rings or not
+ringSlots = [10, 11]
 
 # At the top of the sheet there is a table header row, and the indexing of excel rows starts at 0.
 # So you get +2 as an offset to find a row in the actual data set.
