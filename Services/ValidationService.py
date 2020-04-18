@@ -62,8 +62,15 @@ class ValidationService:
         if ("Engineering" in characterProfs and 9 in missingEnchantItemSlots):
             missingEnchantItemSlots.remove(9)
 
+        # If tailor, ignore cloak enchant if we found a missing enchant. Likely, an embroidery exists on the piece
+        # but there isn't a way for me to tell
+        if ("Tailoring" in characterProfs and 14 in missingEnchantItemSlots):
+            missingEnchantItemSlots.remove(14)
+
         missingEnchantCount += len(missingEnchantItemSlots)
 
         if (missingEnchantCount > 0):
-            errorMsg = self.MissingEnchants + str(missingEnchantCount)
+            slotNamesWithMissingEnchants = [Config.slotNameDict[slot] for slot in missingEnchantItemSlots]
+
+            errorMsg = self.MissingEnchants + ', '.join(slotNamesWithMissingEnchants)
             self.ErrorMessages.append(errorMsg)
